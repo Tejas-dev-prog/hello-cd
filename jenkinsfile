@@ -1,0 +1,27 @@
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Clone') {
+            steps {
+                git 'https://github.com/yourusername/hello-cd.git'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                sh 'docker build -t hello-cd:latest .'
+            }
+        }
+
+        stage('Run Container') {
+            steps {
+                sh 'docker stop hello-cd-container || true'
+                sh 'docker rm hello-cd-container || true'
+                sh 'docker run -d -p 3000:3000 --name hello-cd-container hello-cd:latest'
+            }
+        }
+    }
+}
+
