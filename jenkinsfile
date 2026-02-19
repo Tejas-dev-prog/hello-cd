@@ -5,7 +5,7 @@ pipeline {
 
         stage('Clone') {
             steps {
-                git 'https://github.com/yourusername/hello-cd.git'
+                git 'https://github.com/Tejas-dev-prog/hello-cd.git'
             }
         }
 
