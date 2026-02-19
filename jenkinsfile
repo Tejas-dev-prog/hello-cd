@@ -5,23 +5,22 @@ pipeline {
 
         stage('Clone') {
             steps {
-                git 'https://github.com/Tejas-dev-prog/hello-cd.git'
+                git branch: 'main', url: 'https://github.com/Tejas-dev-prog/hello-cd.git'
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t hello-cd:latest .'
+                bat 'docker build -t hello-cd:latest .'
             }
         }
 
         stage('Run Container') {
             steps {
-                sh 'docker stop hello-cd-container || true'
-                sh 'docker rm hello-cd-container || true'
-                sh 'docker run -d -p 3000:3000 --name hello-cd-container hello-cd:latest'
+                bat 'docker stop hello-cd-container || exit 0'
+                bat 'docker rm hello-cd-container || exit 0'
+                bat 'docker run -d -p 3000:3000 --name hello-cd-container hello-cd:latest'
             }
         }
     }
 }
-
